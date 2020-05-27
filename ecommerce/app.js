@@ -1,9 +1,23 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
+
 require('dotenv').config()
 
 // Import Routes
 const userRoutes = require('./routes/user')
+
+// App
+const app = express();
+
+// Middlewares
+app.use(morgan('dev'))
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(expressValidator());
 
 // Routes Middleware
 app.use("/api", userRoutes);
@@ -14,8 +28,7 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
 
-// Import Mongoose
-const mongoose = require('mongoose');
+// Database
 
 // Load env variables
 const dotenv = require('dotenv');
